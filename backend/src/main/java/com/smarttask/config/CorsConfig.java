@@ -11,8 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Allows the React app (http://localhost:5173) to call this API from the browser.
- * To change the allowed origins edit "app.cors.allowed-origins" in application.properties.
+ * Allows the React app to call this API from the browser.
+ * Set the allowed origins with the CORSALLOWEDORIGINS environment variable
+ * (comma-separated). Trailing slashes are removed automatically, and
+ * wildcard patterns such as https://*.vercel.app are supported.
  */
 @Configuration
 public class CorsConfig {
@@ -24,11 +26,12 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         List<String> origins = Arrays.stream(allowedOrigins.split(","))
                 .map(String::trim)
+                .map(origin -> origin.replaceAll("/+$", ""))
                 .filter(origin -> !origin.isEmpty())
                 .toList();
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(origins);
+        configuration.setAllowedOriginPatterns(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
         configuration.setMaxAge(3600L);
