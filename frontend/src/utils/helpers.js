@@ -77,7 +77,7 @@ export function parseApiError(error, fallback = 'Something went wrong. Please tr
   }
   if (error && error.request) {
     return {
-      message: 'Cannot reach the server. Make sure the backend is running on http://localhost:8080.',
+      message: 'Cannot reach the server. Please check your connection or try again in a moment.',
       fieldErrors: {}
     };
   }

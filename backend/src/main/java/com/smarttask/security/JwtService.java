@@ -24,7 +24,7 @@ public class JwtService {
 
         if (secret == null || secret.trim().isEmpty()) {
             throw new IllegalArgumentException(
-                "JWT_SECRET is missing or empty. Configure it in Render."
+                "JWTSECRET is missing or empty. Set it in Railway Variables."
             );
         }
 
@@ -32,7 +32,7 @@ public class JwtService {
 
         if (secretBytes.length < 32) {
             throw new IllegalArgumentException(
-                "JWT_SECRET must be at least 32 bytes for HS256-compatible keys."
+                "JWTSECRET must be at least 32 bytes for HS256-compatible keys."
             );
         }
 
